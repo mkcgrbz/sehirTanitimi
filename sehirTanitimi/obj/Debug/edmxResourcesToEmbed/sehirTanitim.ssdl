@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="sehirBilgiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bolgeler">
+    <Key>
+      <PropertyRef Name="bolge_id" />
+    </Key>
+    <Property Name="bolge_id" Type="int" Nullable="false" />
+    <Property Name="ad" Type="nvarchar" MaxLength="30" />
+    <Property Name="sehirSayisi" Type="int" />
+  </EntityType>
+  <EntityType Name="Iller">
+    <Key>
+      <PropertyRef Name="plaka" />
+    </Key>
+    <Property Name="plaka" Type="int" Nullable="false" />
+    <Property Name="sehir_adi" Type="nvarchar" MaxLength="20" />
+    <Property Name="rakim" Type="int" />
+    <Property Name="bolge_id" Type="int" />
+    <Property Name="nufus_id" Type="int" />
+    <Property Name="tel_kodu" Type="int" />
+  </EntityType>
+  <EntityType Name="Nufus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="toplamNufus" Type="int" />
+    <Property Name="iller_plaka" Type="int" />
+  </EntityType>
+  <EntityType Name="Table">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Iller_ToTable">
+    <End Role="Bolgeler" Type="Self.Bolgeler" Multiplicity="0..1" />
+    <End Role="Iller" Type="Self.Iller" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bolgeler">
+        <PropertyRef Name="bolge_id" />
+      </Principal>
+      <Dependent Role="Iller">
+        <PropertyRef Name="bolge_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Nufus_ToTable">
+    <End Role="Iller" Type="Self.Iller" Multiplicity="0..1" />
+    <End Role="Nufus" Type="Self.Nufus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Iller">
+        <PropertyRef Name="plaka" />
+      </Principal>
+      <Dependent Role="Nufus">
+        <PropertyRef Name="iller_plaka" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="sehirBilgiModelStoreContainer">
+    <EntitySet Name="Bolgeler" EntityType="Self.Bolgeler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Iller" EntityType="Self.Iller" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Nufus" EntityType="Self.Nufus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Iller_ToTable" Association="Self.FK_Iller_ToTable">
+      <End Role="Bolgeler" EntitySet="Bolgeler" />
+      <End Role="Iller" EntitySet="Iller" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Nufus_ToTable" Association="Self.FK_Nufus_ToTable">
+      <End Role="Iller" EntitySet="Iller" />
+      <End Role="Nufus" EntitySet="Nufus" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

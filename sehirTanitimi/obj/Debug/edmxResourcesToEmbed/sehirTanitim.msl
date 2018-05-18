@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="sehirBilgiModelStoreContainer" CdmEntityContainer="sehirBilgiEntities">
+    <EntitySetMapping Name="Bolgelers">
+      <EntityTypeMapping TypeName="sehirBilgiModel.Bolgeler">
+        <MappingFragment StoreEntitySet="Bolgeler">
+          <ScalarProperty Name="sehirSayisi" ColumnName="sehirSayisi" />
+          <ScalarProperty Name="ad" ColumnName="ad" />
+          <ScalarProperty Name="bolge_id" ColumnName="bolge_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Illers">
+      <EntityTypeMapping TypeName="sehirBilgiModel.Iller">
+        <MappingFragment StoreEntitySet="Iller">
+          <ScalarProperty Name="tel_kodu" ColumnName="tel_kodu" />
+          <ScalarProperty Name="nufus_id" ColumnName="nufus_id" />
+          <ScalarProperty Name="bolge_id" ColumnName="bolge_id" />
+          <ScalarProperty Name="rakim" ColumnName="rakim" />
+          <ScalarProperty Name="sehir_adi" ColumnName="sehir_adi" />
+          <ScalarProperty Name="plaka" ColumnName="plaka" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Nufus">
+      <EntityTypeMapping TypeName="sehirBilgiModel.Nufu">
+        <MappingFragment StoreEntitySet="Nufus">
+          <ScalarProperty Name="iller_plaka" ColumnName="iller_plaka" />
+          <ScalarProperty Name="toplamNufus" ColumnName="toplamNufus" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tables">
+      <EntityTypeMapping TypeName="sehirBilgiModel.Table">
+        <MappingFragment StoreEntitySet="Table">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
