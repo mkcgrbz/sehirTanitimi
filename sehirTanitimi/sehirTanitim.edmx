@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="sehirBilgiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bolgeler">
+          <Key>
+            <PropertyRef Name="bolge_id" />
+          </Key>
+          <Property Name="bolge_id" Type="int" Nullable="false" />
+          <Property Name="ad" Type="nvarchar" MaxLength="30" />
+          <Property Name="sehirSayisi" Type="int" />
+        </EntityType>
+        <EntityType Name="Iller">
+          <Key>
+            <PropertyRef Name="plaka" />
+          </Key>
+          <Property Name="plaka" Type="int" Nullable="false" />
+          <Property Name="sehir_adi" Type="nvarchar" MaxLength="20" />
+          <Property Name="rakim" Type="int" />
+          <Property Name="bolge_id" Type="int" />
+          <Property Name="nufus_id" Type="int" />
+          <Property Name="tel_kodu" Type="int" />
+        </EntityType>
+        <EntityType Name="Nufus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="toplamNufus" Type="int" />
+          <Property Name="iller_plaka" Type="int" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Iller_ToTable">
+          <End Role="Bolgeler" Type="Self.Bolgeler" Multiplicity="0..1" />
+          <End Role="Iller" Type="Self.Iller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bolgeler">
+              <PropertyRef Name="bolge_id" />
+            </Principal>
+            <Dependent Role="Iller">
+              <PropertyRef Name="bolge_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nufus_ToTable">
+          <End Role="Iller" Type="Self.Iller" Multiplicity="0..1" />
+          <End Role="Nufus" Type="Self.Nufus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Iller">
+              <PropertyRef Name="plaka" />
+            </Principal>
+            <Dependent Role="Nufus">
+              <PropertyRef Name="iller_plaka" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sehirBilgiModelStoreContainer">
+          <EntitySet Name="Bolgeler" EntityType="Self.Bolgeler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Iller" EntityType="Self.Iller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Nufus" EntityType="Self.Nufus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Iller_ToTable" Association="Self.FK_Iller_ToTable">
+            <End Role="Bolgeler" EntitySet="Bolgeler" />
+            <End Role="Iller" EntitySet="Iller" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nufus_ToTable" Association="Self.FK_Nufus_ToTable">
+            <End Role="Iller" EntitySet="Iller" />
+            <End Role="Nufus" EntitySet="Nufus" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sehirBilgiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="sehirBilgiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bolgelers" EntityType="sehirBilgiModel.Bolgeler" />
+          <EntitySet Name="Illers" EntityType="sehirBilgiModel.Iller" />
+          <EntitySet Name="Nufus" EntityType="sehirBilgiModel.Nufu" />
+          <EntitySet Name="Tables" EntityType="sehirBilgiModel.Table" />
+          <AssociationSet Name="FK_Iller_ToTable" Association="sehirBilgiModel.FK_Iller_ToTable">
+            <End Role="Bolgeler" EntitySet="Bolgelers" />
+            <End Role="Iller" EntitySet="Illers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Nufus_ToTable" Association="sehirBilgiModel.FK_Nufus_ToTable">
+            <End Role="Iller" EntitySet="Illers" />
+            <End Role="Nufu" EntitySet="Nufus" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Bolgeler">
+          <Key>
+            <PropertyRef Name="bolge_id" />
+          </Key>
+          <Property Name="bolge_id" Type="Int32" Nullable="false" />
+          <Property Name="ad" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="sehirSayisi" Type="Int32" />
+          <NavigationProperty Name="Illers" Relationship="sehirBilgiModel.FK_Iller_ToTable" FromRole="Bolgeler" ToRole="Iller" />
+        </EntityType>
+        <EntityType Name="Iller">
+          <Key>
+            <PropertyRef Name="plaka" />
+          </Key>
+          <Property Name="plaka" Type="Int32" Nullable="false" />
+          <Property Name="sehir_adi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="rakim" Type="Int32" />
+          <Property Name="bolge_id" Type="Int32" />
+          <Property Name="nufus_id" Type="Int32" />
+          <Property Name="tel_kodu" Type="Int32" />
+          <NavigationProperty Name="Bolgeler" Relationship="sehirBilgiModel.FK_Iller_ToTable" FromRole="Iller" ToRole="Bolgeler" />
+          <NavigationProperty Name="Nufus" Relationship="sehirBilgiModel.FK_Nufus_ToTable" FromRole="Iller" ToRole="Nufu" />
+        </EntityType>
+        <EntityType Name="Nufu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="toplamNufus" Type="Int32" />
+          <Property Name="iller_plaka" Type="Int32" />
+          <NavigationProperty Name="Iller" Relationship="sehirBilgiModel.FK_Nufus_ToTable" FromRole="Nufu" ToRole="Iller" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Iller_ToTable">
+          <End Type="sehirBilgiModel.Bolgeler" Role="Bolgeler" Multiplicity="0..1" />
+          <End Type="sehirBilgiModel.Iller" Role="Iller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bolgeler">
+              <PropertyRef Name="bolge_id" />
+            </Principal>
+            <Dependent Role="Iller">
+              <PropertyRef Name="bolge_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Nufus_ToTable">
+          <End Type="sehirBilgiModel.Iller" Role="Iller" Multiplicity="0..1" />
+          <End Type="sehirBilgiModel.Nufu" Role="Nufu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Iller">
+              <PropertyRef Name="plaka" />
+            </Principal>
+            <Dependent Role="Nufu">
+              <PropertyRef Name="iller_plaka" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sehirBilgiModelStoreContainer" CdmEntityContainer="sehirBilgiEntities">
+          <EntitySetMapping Name="Bolgelers">
+            <EntityTypeMapping TypeName="sehirBilgiModel.Bolgeler">
+              <MappingFragment StoreEntitySet="Bolgeler">
+                <ScalarProperty Name="sehirSayisi" ColumnName="sehirSayisi" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="bolge_id" ColumnName="bolge_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Illers">
+            <EntityTypeMapping TypeName="sehirBilgiModel.Iller">
+              <MappingFragment StoreEntitySet="Iller">
+                <ScalarProperty Name="tel_kodu" ColumnName="tel_kodu" />
+                <ScalarProperty Name="nufus_id" ColumnName="nufus_id" />
+                <ScalarProperty Name="bolge_id" ColumnName="bolge_id" />
+                <ScalarProperty Name="rakim" ColumnName="rakim" />
+                <ScalarProperty Name="sehir_adi" ColumnName="sehir_adi" />
+                <ScalarProperty Name="plaka" ColumnName="plaka" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Nufus">
+            <EntityTypeMapping TypeName="sehirBilgiModel.Nufu">
+              <MappingFragment StoreEntitySet="Nufus">
+                <ScalarProperty Name="iller_plaka" ColumnName="iller_plaka" />
+                <ScalarProperty Name="toplamNufus" ColumnName="toplamNufus" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="sehirBilgiModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
